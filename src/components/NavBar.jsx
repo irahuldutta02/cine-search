@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Navbar = ({ onThemeToggle, onSearch }) => {
+const Navbar = () => {
   return (
     <nav className="bg-color1 fixed w-full flex justify-center items-center">
       <div className="w-full p-4 max-w-7xl flex justify-between items-center">
@@ -18,20 +18,10 @@ const Navbar = ({ onThemeToggle, onSearch }) => {
         </div>
         <div className="flex items-center justify-center gap-4">
           <div className="flex items-center justify-center">
-            <button
-              className="text-white focus:outline-none"
-              onClick={onThemeToggle}
-              aria-label="Toggle Theme"
-            >
-              🌙
-            </button>
-          </div>
-          <div className="flex items-center justify-center">
             <input
               type="text"
               placeholder="Search movies..."
               className="px-4 py-2 rounded-md focus:outline-color2 bg-color4 outline-none"
-              onChange={(e) => onSearch(e.target.value)}
             />
           </div>
         </div>
