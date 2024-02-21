@@ -5,6 +5,16 @@ import { useContext } from "react";
 const Navbar = () => {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
 
+  function handleSetTheme() {
+    if (darkMode) {
+      localStorage.setItem("darkMode", "false");
+      setDarkMode(false);
+    } else {
+      localStorage.setItem("darkMode", "true");
+      setDarkMode(true);
+    }
+  }
+
   return (
     <nav className="bg-color1 text-color4 shadow-xl dark:bg-color4 dark:text-color1 fixed w-full flex justify-center items-center z-50">
       <div className="w-full p-4 max-w-7xl flex justify-between items-center">
@@ -24,10 +34,7 @@ const Navbar = () => {
           <div className="">
             <button
               className="text-xl bg-color4 text-color1 dark:bg-color1 dark:text-color4 rounded-md px-4 py-2"
-              onClick={(e) => {
-                e.preventDefault();
-                setDarkMode(!darkMode);
-              }}
+              onClick={handleSetTheme}
             >
               {darkMode ? (
                 <i className="fa-regular fa-sun"></i>
