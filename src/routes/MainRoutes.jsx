@@ -8,7 +8,10 @@ function MainRoutes() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/name/:name" element={<MovieDetails />} />
-      <Route path="*" element={<ErrorPage />} />
+      <Route
+        path="*"
+        element={<ErrorPage status={"404"} message={"Page Not Found"} />}
+      />
     </Routes>
   );
 }
