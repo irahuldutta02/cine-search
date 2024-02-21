@@ -7,7 +7,8 @@ function MainRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/name/:name" element={<MovieDetails />} />
+      <Route path="/name/:imdbid" element={<MovieDetails />} />
+      <Route path="/page/:pageNo" element={<Home />} />
       <Route
         path="*"
         element={<ErrorPage status={"404"} message={"Page Not Found"} />}

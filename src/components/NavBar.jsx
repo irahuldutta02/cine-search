@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../context/context";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 const Navbar = () => {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
+  const [showSearchModal, setShowSearchModal] = useState(false);
 
   function handleSetTheme() {
     if (darkMode) {
@@ -43,12 +44,44 @@ const Navbar = () => {
               )}
             </button>
           </div>
-          <div className="flex items-center h-full justify-center">
+          <div className="flex items-center h-full justify-center relative">
             <input
               type="text"
               placeholder="Search movies..."
               className="px-4 py-2 rounded-md h-full focus:outline-color2 bg-color4 text-color1 dark:bg-color1 dark:text-color4 outline-none w-48 md:w-96"
+              onChange={(e) => {
+                if (e.target.value.length > 0) {
+                  setShowSearchModal(true);
+                } else {
+                  setShowSearchModal(false);
+                }
+              }}
             />
+            {showSearchModal && (
+              <ul className="absolute top-14 bg-color4 border-2 border-color1 rounded-lg w-48 max-h-40 overflow-y-auto md:w-96 p-4 text-color1 flex justify-center items-start flex-col gap-2 dark:bg-color1 dark:text-color4 dark:border-color4">
+                <li className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer">
+                  Hello there
+                </li>
+                <li className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer">
+                  Hello there
+                </li>
+                <li className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer">
+                  Hello there
+                </li>
+                <li className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer">
+                  Hello there
+                </li>
+                <li className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer">
+                  Hello there
+                </li>
+                <li className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer">
+                  Hello there
+                </li>
+                <li className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer">
+                  Hello there
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       </div>
