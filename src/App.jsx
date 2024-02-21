@@ -5,7 +5,9 @@ function App() {
   return (
     <>
       <Navbar />
-      <MainRoutes />
+      <div className="bg-color4 text-color1 px-4 py-28 min-h-[100vh]">
+        <MainRoutes />
+      </div>
     </>
   );
 }

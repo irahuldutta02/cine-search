@@ -8,7 +8,6 @@ function MainRoutes() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/name/:name" element={<MovieDetails />} />
-      {/* <Route path="/imdbid/:imdbid" element={<MovieDetails />} /> */}
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
