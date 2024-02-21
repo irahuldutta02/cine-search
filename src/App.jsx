@@ -1,15 +1,15 @@
-import Navbar from "./components/NavBar";
-import MainRoutes from "./routes/MainRoutes";
+import { useState } from "react";
+import { Page } from "./Page";
+import { ThemeContext } from "./context/context";
 
 function App() {
+  const [darkMode, setDarkMode] = useState(true);
+
   return (
     <>
-      <div className="bg-color4 text-color1 dark:bg-color1 dark:text-color4">
-        <Navbar />
-        <div className="px-4 py-28 min-h-[100vh]">
-          <MainRoutes />
-        </div>
-      </div>
+      <ThemeContext.Provider value={{ darkMode, setDarkMode }}>
+        <Page />
+      </ThemeContext.Provider>
     </>
   );
 }
