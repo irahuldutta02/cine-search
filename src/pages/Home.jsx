@@ -32,7 +32,7 @@ export function Home() {
   useEffect(() => {
     async function fetchMovies() {
       const response = await axios.get(
-        searchMovieBySearchTerm("dc", currentPage),
+        searchMovieBySearchTerm("Harry Potter", currentPage),
         {
           headers: {
             "Content-Type": "application/json",
