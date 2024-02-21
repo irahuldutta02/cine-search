@@ -1,9 +1,11 @@
-import { Page } from "./Page";
+import Navbar from "./components/NavBar";
+import MainRoutes from "./routes/MainRoutes";
 
 function App() {
   return (
     <>
-      <Page />
+      <Navbar />
+      <MainRoutes />
     </>
   );
 }
