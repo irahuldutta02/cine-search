@@ -7,9 +7,7 @@ const ErrorPage = ({ status, message }) => {
   const navigate = useNavigate();
 
   function handleClick() {
-    if (message === "Too many results.") {
-      setSearchTerm("Harry Potter");
-    }
+    setSearchTerm("Harry Potter");
     navigate("/");
   }
 
