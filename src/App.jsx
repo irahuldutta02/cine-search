@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Page } from "./Page";
-import { ThemeContext } from "./context/context";
+import { SearchTermContext, ThemeContext } from "./context/context";
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const isDarkMode = localStorage.getItem("darkMode");
@@ -24,7 +25,9 @@ function App() {
   return (
     <>
       <ThemeContext.Provider value={{ darkMode, setDarkMode }}>
-        <Page />
+        <SearchTermContext.Provider value={{ searchTerm, setSearchTerm }}>
+          <Page />
+        </SearchTermContext.Provider>
       </ThemeContext.Provider>
     </>
   );

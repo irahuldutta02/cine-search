@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
-import { ThemeContext } from "../context/context";
+import { SearchTermContext, ThemeContext } from "../context/context";
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [showSearchModal, setShowSearchModal] = useState(false);
+  const [searchText, setSearchText] = useState("");
+
+  const { setSearchTerm } = useContext(SearchTermContext);
 
   function handleSetTheme() {
     if (darkMode) {
@@ -13,6 +19,24 @@ const Navbar = () => {
     } else {
       localStorage.setItem("darkMode", "true");
       setDarkMode(true);
+    }
+  }
+
+  function handleChange(e) {
+    setSearchText(e.target.value);
+    if (e.target.value.length > 0) {
+      setShowSearchModal(true);
+    } else {
+      setShowSearchModal(false);
+    }
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      setSearchTerm(e.target.value);
+      setShowSearchModal(false);
+      setSearchText("");
+      navigate("/");
     }
   }
 
@@ -49,13 +73,9 @@ const Navbar = () => {
               type="text"
               placeholder="Search movies..."
               className="px-4 py-2 rounded-md h-full focus:outline-color2 bg-color4 text-color1 dark:bg-color1 dark:text-color4 outline-none w-48 md:w-96"
-              onChange={(e) => {
-                if (e.target.value.length > 0) {
-                  setShowSearchModal(true);
-                } else {
-                  setShowSearchModal(false);
-                }
-              }}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+              value={searchText}
             />
             {showSearchModal && (
               <ul className="absolute top-14 bg-color4 border-2 border-color1 rounded-lg w-48 max-h-40 overflow-y-auto md:w-96 p-4 text-color1 flex justify-center items-start flex-col gap-2 dark:bg-color1 dark:text-color4 dark:border-color4">

@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MovieCard } from "../components/MovieCard";
 import axios from "axios";
 import { searchMovieBySearchTerm } from "../apis/searchMovieBySearchTerm";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import ErrorPage from "./ErrorPage";
+import { SearchTermContext } from "../context/context";
 
 export function Home() {
   const [movies, setMovies] = useState([]);
   const [pageCount, setPageCount] = useState(0);
+
+  const { searchTerm } = useContext(SearchTermContext);
 
   const [error, setError] = useState(null);
 
@@ -32,7 +35,10 @@ export function Home() {
   useEffect(() => {
     async function fetchMovies() {
       const response = await axios.get(
-        searchMovieBySearchTerm("Harry Potter", currentPage),
+        searchMovieBySearchTerm(
+          searchTerm !== "" ? searchTerm : "Harry Potter",
+          currentPage
+        ),
         {
           headers: {
             "Content-Type": "application/json",
@@ -50,7 +56,7 @@ export function Home() {
       }
     }
     fetchMovies();
-  }, [currentPage]);
+  }, [currentPage, searchTerm]);
 
   if (error) {
     return <ErrorPage status={"404"} message={error} />;
