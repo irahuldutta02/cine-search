@@ -48,7 +48,13 @@ const Navbar = () => {
     }
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    window.addEventListener("click", (e) => {
+      if (e.target.id !== "searchSuggestions") {
+        setShowSearchModal(false);
+      }
+    });
+  }, []);
 
   function handleKeyDown(e) {
     if (e.key === "Enter") {
@@ -97,7 +103,7 @@ const Navbar = () => {
               value={searchText}
             />
             {showSearchModal && (
-              <ul className="absolute top-14 bg-color4 border-2 border-color1 rounded-lg w-48  md:w-96 px-4 py-2 max-h-48 overflow-auto text-color1 flex justify-start items-start flex-col gap-2 dark:bg-color1 dark:text-color4 dark:border-color4">
+              <ul id="searchSuggestions" className="absolute top-14 bg-color4 border-2 border-color1 rounded-lg w-48  md:w-96 px-4 py-2 max-h-48 overflow-auto text-color1 flex justify-start items-start flex-col gap-2 dark:bg-color1 dark:text-color4 dark:border-color4">
                 {searchText.length <= 3 && (
                   <li className="w-full py-2 text-center">
                     Please enter more than 3 characters
