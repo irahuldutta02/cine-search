@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { SearchTermContext, ThemeContext } from "../context/context";
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useDebounce } from "../hooks/useDebounce";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const Navbar = () => {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [searchText, setSearchText] = useState("");
-
+  const [searchResults, setSearchResults] = useState([]);
   const { setSearchTerm } = useContext(SearchTermContext);
 
   function handleSetTheme() {
@@ -22,14 +23,32 @@ const Navbar = () => {
     }
   }
 
+  const getSearchResults = useDebounce(async (searchText) => {
+    const response = await axios.get(
+      `https://www.omdbapi.com/?apikey=${
+        import.meta.env.VITE_OMDB_API_KEY
+      }&s=${searchText}&page=1`
+    );
+    if (response.data.Response === "False") {
+      setSearchResults([]);
+    } else {
+      setSearchResults(response.data.Search);
+    }
+  }, 300);
+
   function handleChange(e) {
     setSearchText(e.target.value);
     if (e.target.value.length > 0) {
       setShowSearchModal(true);
+      if (e.target.value.length > 3) {
+        getSearchResults(e.target.value);
+      }
     } else {
       setShowSearchModal(false);
     }
   }
+
+  useEffect(() => {}, []);
 
   function handleKeyDown(e) {
     if (e.key === "Enter") {
@@ -78,28 +97,33 @@ const Navbar = () => {
               value={searchText}
             />
             {showSearchModal && (
-              <ul className="absolute top-14 bg-color4 border-2 border-color1 rounded-lg w-48 max-h-40 overflow-y-auto md:w-96 p-4 text-color1 flex justify-center items-start flex-col gap-2 dark:bg-color1 dark:text-color4 dark:border-color4">
-                <li className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer">
+              <ul className="absolute top-14 bg-color4 border-2 border-color1 rounded-lg w-48  md:w-96 px-4 py-2 max-h-48 overflow-auto text-color1 flex justify-start items-start flex-col gap-2 dark:bg-color1 dark:text-color4 dark:border-color4">
+                {searchText.length <= 3 && (
+                  <li className="w-full py-2 text-center">
+                    Please enter more than 3 characters
+                  </li>
+                )}
+                {searchText.length > 3 && searchResults.length === 0 && (
+                  <li className="w-full py-2 text-center">No results found</li>
+                )}
+                {searchText.length > 3 &&
+                  searchResults.length > 0 &&
+                  searchResults.map((result) => (
+                    <li
+                      key={result.imdbID}
+                      className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer"
+                      onClick={() => {
+                        setShowSearchModal(false);
+                        setSearchText("");
+                        navigate(`/name/${result.imdbID}`);
+                      }}
+                    >
+                      {result.Title}
+                    </li>
+                  ))}
+                {/* <li className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer">
                   Hello there
-                </li>
-                <li className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer">
-                  Hello there
-                </li>
-                <li className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer">
-                  Hello there
-                </li>
-                <li className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer">
-                  Hello there
-                </li>
-                <li className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer">
-                  Hello there
-                </li>
-                <li className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer">
-                  Hello there
-                </li>
-                <li className="border-b border-color1 w-full py-2 dark:border-color4 cursor-pointer">
-                  Hello there
-                </li>
+                </li> */}
               </ul>
             )}
           </div>
