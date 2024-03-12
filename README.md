@@ -4,6 +4,10 @@
 
 ### [Deployed at Vercel 🔗](https://cine-search-three.vercel.app/)
 
+## Preview
+
+![image](./docs/assets/01.png)
+
 ## Description
 
 ### This is a movie search app built using React and Tailwind CSS. It uses the [OMDB API](https://omdbapi.com/).
@@ -33,7 +37,13 @@ cd cine-search
 npm install
 ```
 
-### 3. Start the development server
+### 3. Set up the .env
+
+```bash
+VITE_OMDB_API_KEY="9bec6116" # get it from [https://www.omdbapi.com/apikey.aspx]
+```
+
+### 4. Start the development server
 
 ```bash
 npm run dev
