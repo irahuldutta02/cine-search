@@ -40,7 +40,7 @@ npm install
 ### 3. Set up the .env
 
 ```bash
-VITE_OMDB_API_KEY="9bec6116" # get it from [https://www.omdbapi.com/apikey.aspx]
+VITE_OMDB_API_KEY=<YOUR_KEY> # get it from [https://www.omdbapi.com/apikey.aspx]
 ```
 
 ### 4. Start the development server
